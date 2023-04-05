@@ -3,16 +3,20 @@ package com.CommerceTool.Customer;
 import com.commercetools.api.client.ProjectApiRoot;
 import com.commercetools.api.models.customer.*;
 import com.commercetools.api.models.customer_group.CustomerGroup;
-import com.commercetools.api.models.customer_group.CustomerGroupDraft;
 import com.commercetools.api.models.customer_group.CustomerGroupPagedQueryResponse;
-import com.commercetools.api.models.type.FieldDefinition;
-import com.commercetools.api.models.type.Type;
-import com.commercetools.api.models.type.TypePagedQueryResponse;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
+import java.io.PrintWriter;
 
 @RestController
 @Slf4j
@@ -26,21 +30,46 @@ public class CustomerController {
     CustomerService service;
 
 
+    ObjectMapper mapper = new ObjectMapper();
 
     // Create Customer
     @PostMapping
-    public ResponseEntity createCustomer(@RequestBody CustomerDetails customerdetails)
-    {
-      return new ResponseEntity(service.createCustomer(customerdetails),HttpStatus.CREATED);
+    public ResponseEntity createCustomer(@RequestBody CustomerDetails customerdetails) throws JsonProcessingException {
+        Customer customer = service.createCustomer(customerdetails);
+        mapper.registerModule(new JavaTimeModule());
+       String jsonData= mapper.writeValueAsString(customer);
+
+        System.out.println(jsonData);
+      return new ResponseEntity(customer,HttpStatus.CREATED);
     }
 
 
 
     //Get all Customer
     @GetMapping
-    public ResponseEntity<CustomerPagedQueryResponse> getAllCustomer(@RequestParam(defaultValue = "50",required = false) String Limit)
-    {
+    public ResponseEntity<CustomerPagedQueryResponse>  getAllCustomer( @RequestParam(defaultValue = "50",required = false) String Limit) {
+
         return new ResponseEntity<>(service.getAllCustomer(Limit),HttpStatus.OK);
+    }
+
+
+    // Download Csv file
+    @GetMapping("/csv")
+    public void  downloadCsvOfAllCustomer( HttpServletResponse response) throws IOException {
+        response.setContentType("text/csv");
+        response.setHeader("Content-Disposition","attachment; filename=\"customers.csv\"");
+
+        PrintWriter writer = response.getWriter();
+        CustomerPagedQueryResponse customerPagedQueryResponse = projectApiRoot.customers().get().executeBlocking().getBody();
+
+        writer.println("Id,firstName,middleName,lastName,email,customerNumber,externalId");
+        for(Customer customer : customerPagedQueryResponse.getResults())
+        {
+            writer.println(customer.getId()+","+customer.getFirstName()+", "+","+customer.getMiddleName() +customer.getLastName()+
+                    ", "+customer.getEmail()+", "+customer.getCustomerNumber()+","+customer.getExternalId());
+        }
+        writer.flush();
+        writer.close();
     }
 
 
