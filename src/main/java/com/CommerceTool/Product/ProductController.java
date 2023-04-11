@@ -29,24 +29,24 @@ public class ProductController {
 
     // Create Product Type
     @PostMapping("/product-type")
-    public ProductType createProductType(@RequestBody ProductDetails productDetails)
+    public ResponseEntity<ProductType> createProductType(@RequestBody ProductDetails productDetails)
     {
-        return service.createProductType(productDetails);
+        return new ResponseEntity<>(service.createProductType(productDetails),HttpStatus.CREATED);
     }
 
 
     // Get All Product Type
     @GetMapping("/types")
-    public ProductTypePagedQueryResponse getAllProductTypes(@RequestParam String Limit)
+    public ResponseEntity<ProductTypePagedQueryResponse> getAllProductTypes(@RequestParam String Limit)
     {
-        return service.getAllProductTypes(Limit);
+        return new ResponseEntity<>(service.getAllProductTypes(Limit),HttpStatus.OK);
     }
 
 
 
     // Get ProductType By id
     @GetMapping("/product-type/{id}")
-    public ResponseEntity checkProductTypeBYId(@PathVariable String id)
+    public ResponseEntity<ProductType> checkProductTypeBYId(@PathVariable String id)
     {
         return ResponseEntity.status(HttpStatus.OK).body(service.checkProductTypeById(id));
     }
@@ -55,27 +55,27 @@ public class ProductController {
 
     // Update Product Type
     @PostMapping("/updates/{id}")
-    public ProductType updateProductType(@PathVariable String id,@RequestBody ProductDetails productDetails)
+    public ResponseEntity<ProductType> updateProductType(@PathVariable String id,@RequestBody ProductDetails productDetails)
     {
-        return service.productTypeUpdate(id,productDetails);
+        return new ResponseEntity<>(service.productTypeUpdate(id,productDetails),HttpStatus.OK);
     }
 
 
 
     // Create Product
     @PostMapping
-    public Product createProduct(@RequestBody ProductDetails productDetails)
+    public ResponseEntity<Product> createProduct(@RequestBody ProductDetails productDetails)
     {
-        return service.createProduct(productDetails);
+        return new ResponseEntity<>(service.createProduct(productDetails),HttpStatus.OK);
     }
 
 
 
     // Get All Product
     @GetMapping
-    public ProductPagedQueryResponse getProducts(@RequestParam (required = false, defaultValue="5") String limit)
+    public ResponseEntity<ProductPagedQueryResponse> getProducts(@RequestParam (required = false, defaultValue="5") String limit)
     {
-        return service.getProducts(limit);
+        return new ResponseEntity<>(service.getProducts(limit),HttpStatus.OK);
     }
 
 
@@ -90,25 +90,25 @@ public class ProductController {
 
 
     @GetMapping("/price/{id}")
-    public long getPrice(@PathVariable String id)
+    public ResponseEntity<Long> getPrice(@PathVariable String id)
     {
-        return service.getPrice(id);
+        return new ResponseEntity<>(service.getPrice(id),HttpStatus.OK);
     }
 
     // Update Product
     @PostMapping("/{Id}")
-    public Product updateProducts(@PathVariable String Id, @RequestBody ProductDetails productDetails)
+    public ResponseEntity<Product> updateProducts(@PathVariable String Id, @RequestBody ProductDetails productDetails)
     {
-        return service.updateProducts(Id,productDetails);
+        return new ResponseEntity<>(service.updateProducts(Id,productDetails),HttpStatus.OK);
     }
 
 
 
     // Delete Products
     @DeleteMapping("/{Id}")
-    public Product deleteProducts(@PathVariable String Id,@RequestParam(required = false, defaultValue="1L") long version)
+    public ResponseEntity<Product> deleteProducts(@PathVariable String Id,@RequestParam(required = false, defaultValue="1L") long version)
     {
-        return service.deleteProducts(Id,version);
+        return new ResponseEntity<>(service.deleteProducts(Id,version),HttpStatus.OK);
     }
 
 

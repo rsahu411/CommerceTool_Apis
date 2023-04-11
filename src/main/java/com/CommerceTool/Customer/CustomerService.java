@@ -20,6 +20,7 @@ public class CustomerService {
     ProjectApiRoot apiRoot;
     DataProvider cdp = new DataProvider();
 
+
     // Create a new Customer
     public Customer createCustomer(CustomerDetails customerDetails)
     {
@@ -33,19 +34,12 @@ public class CustomerService {
                 .customerNumber(customerDetails.getCustomerNumber())
                 .externalId(customerDetails.getExternalId())
                 .companyName(customerDetails.getCompanyName())
-//                .custom(customFieldsDraftBuilder -> customFieldsDraftBuilder
-//                        .type(typeResourceIdentifierBuilder -> typeResourceIdentifierBuilder
-//                                .key(customerDetails.getCustomTypeKey()))
-//                        .fields(fieldContainerBuilder -> fieldContainerBuilder
-//                                .addValue(customerDetails.getCustomFieldName(),customerDetails.getCustomFieldLabel())))
                 .build();
         return cdp.createCustomer(customerDraft);
     }
 
 
-//    public CustomerService(ProjectApiRoot apiRoot) {
-//        this.apiRoot = apiRoot;
-//    }
+
 
     // Get All Customers
     public CustomerPagedQueryResponse getAllCustomer(String limit)

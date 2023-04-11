@@ -6,6 +6,7 @@ import com.commercetools.api.models.common.LocalizedString;
 import com.commercetools.api.models.state.State;
 import com.commercetools.api.models.state.StateDraft;
 import com.commercetools.api.models.state.StatePagedQueryResponse;
+import com.commercetools.api.models.state.StateRoleEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

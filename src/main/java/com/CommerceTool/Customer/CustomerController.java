@@ -85,9 +85,9 @@ public class CustomerController {
 
 
     //Delete Customer By id
-    public Customer deleteCustomerById(@PathVariable String Id,@RequestParam(required = false,defaultValue = "1L") long version)
+    public ResponseEntity<Customer> deleteCustomerById(@PathVariable String Id,@RequestParam(required = false,defaultValue = "1L") long version)
     {
-        return service.deleteCustomerById(Id,version);
+        return new ResponseEntity<>(service.deleteCustomerById(Id,version),HttpStatus.OK);
     }
 
 
@@ -95,10 +95,10 @@ public class CustomerController {
 
     // Update Customer By id
     @PostMapping("/{Id}")
-    public Customer updateCustomer(@PathVariable String Id,@RequestBody CustomerDetails customerDetails)
+    public ResponseEntity<Customer> updateCustomer(@PathVariable String Id,@RequestBody CustomerDetails customerDetails)
     {
 
-       return service.updateCustomer(Id,customerDetails);
+       return new ResponseEntity<>(service.updateCustomer(Id,customerDetails),HttpStatus.OK);
     }
 
 
@@ -106,18 +106,18 @@ public class CustomerController {
 
     // Create Customer Group
     @PostMapping("/groups")
-    public CustomerGroup createCustomerGroup(@RequestBody CustomerDetails customerDetails)
+    public ResponseEntity<CustomerGroup> createCustomerGroup(@RequestBody CustomerDetails customerDetails)
     {
-        return service.createCustomerGroup(customerDetails);
+        return new ResponseEntity<>(service.createCustomerGroup(customerDetails),HttpStatus.CREATED);
     }
 
 
 
     // Get All Customer-Groups
     @GetMapping("/groups")
-    public CustomerGroupPagedQueryResponse getCustomerGroupCustomer()
+    public ResponseEntity<CustomerGroupPagedQueryResponse> getCustomerGroupCustomer()
     {
-        return service.getCustomerGroupCustomer();
+        return new ResponseEntity<>(service.getCustomerGroupCustomer(),HttpStatus.OK);
     }
 
 
@@ -125,9 +125,9 @@ public class CustomerController {
 
     // Get Customer-Group By id
     @GetMapping("/groups/{id}")
-    public CustomerGroup getCustomerGroupById(@PathVariable String id)
+    public ResponseEntity<CustomerGroup> getCustomerGroupById(@PathVariable String id)
     {
-        return service.getCustomerGroupById(id);
+        return new ResponseEntity<>(service.getCustomerGroupById(id),HttpStatus.OK);
     }
 
 
@@ -135,24 +135,11 @@ public class CustomerController {
 
     // Delete Customer-Group By id
     @DeleteMapping("/groups/{id}")
-    public CustomerGroup deleteCustomerGroupById(@PathVariable String id,@RequestParam(required = false,defaultValue = "1L") long version)
+    public ResponseEntity<CustomerGroup> deleteCustomerGroupById(@PathVariable String id,@RequestParam(required = false,defaultValue = "1L") long version)
     {
-        return service.deleteCustomerGroupById(id,version);
+        return new ResponseEntity<>(service.deleteCustomerGroupById(id,version),HttpStatus.OK);
     }
 
-
-
-
-
-
-
-
-    // Update Custom Object
-//    @PostMapping("/custom-update/{id}")
-//    public Type updateCustomObject(@PathVariable String id,@RequestBody CustomerDetails customerDetails)
-//    {
-//        return service.updateCustomType(customerDetails,id);
-//    }
 
 
 
