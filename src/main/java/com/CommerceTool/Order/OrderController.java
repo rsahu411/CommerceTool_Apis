@@ -20,6 +20,7 @@ public class OrderController {
     }
 
 
+    // Get All Orders
     @GetMapping
     public OrderPagedQueryResponse getAllOrders()
     {
@@ -27,10 +28,45 @@ public class OrderController {
     }
 
 
-    @PostMapping("/states/{OrderId}")
+    // Add TransitionState
+    @PostMapping("/states/{orderId}")
     public Order AddTransitionState(@RequestBody OrderDetails orderDetails, @PathVariable String orderId)
     {
         return service.AddTransitionState(orderDetails,orderId);
+    }
+
+
+   // Add delivery
+    @PostMapping("/add-delivery/{orderId}")
+    public Order AddDelivery(@RequestBody OrderDetails orderDetails, @PathVariable String orderId)
+    {
+        return service.addDelivery(orderDetails,orderId);
+    }
+
+
+
+    // Remove Delivery
+    @PostMapping("/remove-delivery/{orderId}")
+    public Order removeDelivery(@RequestBody OrderDetails orderDetails,@PathVariable String orderId)
+    {
+        return service.removeDelivery(orderDetails,orderId);
+    }
+
+
+
+    // Add Payment
+    @PostMapping("/add-payment/{orderId}")
+    public Order addPayment(@RequestBody OrderDetails orderDetails,@PathVariable String orderId)
+    {
+        return service.addPayment(orderDetails,orderId);
+    }
+
+
+    // Remove Payment
+    @PostMapping("/remove-payment/{orderId}")
+    public Order removePayment(@RequestBody OrderDetails orderDetails,@PathVariable String orderId)
+    {
+        return service.removePayment(orderDetails,orderId);
     }
 
 }

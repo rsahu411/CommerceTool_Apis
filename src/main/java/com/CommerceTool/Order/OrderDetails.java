@@ -1,13 +1,8 @@
 package com.CommerceTool.Order;
 
-import com.CommerceTool.DataProvider.DataProvider;
-import com.commercetools.api.client.ProjectApiRoot;
-import com.commercetools.api.models.order.Order;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.*;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -20,5 +15,42 @@ public class OrderDetails {
     private String orderNumber;
 
     private String stateId;
+
+    // payment id & key
+    private String paymentId;
+    private String paymentKey;
+
+    // Delivery details
+
+    private String deliveryId;
+    List<DeliveryItemDetails> items;
+
+    List<ParcelDetails> parcels;
+
+    // Delivery address details
+    private String key;
+    private String title;
+    private String salutation;
+    private String firstName;
+    private String lastName;
+    private String streetName;
+    private String streetNumber;
+    private String postalCode;
+    private String region;
+    private String city;
+    private String state;
+    private String country;
+    private String company;
+    private String department;
+    private String building;
+    private String apartment;
+    private String poBox;
+    private String mobile;
+    private String phone;
+    private String email;
+    private String fax;
+    private String additionalAddressInfo;
+    private String externalId;
+    private String additionalStreetInfo;
 
 }

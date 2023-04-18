@@ -1,5 +1,6 @@
 package com.CommerceTool.DataProvider;
 
+
 import com.CommerceTool.configuration.Client;
 import com.commercetools.api.client.ProjectApiRoot;
 import com.commercetools.api.models.cart.Cart;
@@ -15,11 +16,14 @@ import com.commercetools.api.models.discount_code.DiscountCode;
 import com.commercetools.api.models.discount_code.DiscountCodeDraft;
 import com.commercetools.api.models.order.Order;
 import com.commercetools.api.models.order.OrderFromCartDraft;
-import com.commercetools.api.models.order.OrderUpdate;
+import com.commercetools.api.models.payment.Payment;
+import com.commercetools.api.models.payment.PaymentDraft;
 import com.commercetools.api.models.product.Product;
 import com.commercetools.api.models.product.ProductDraft;
 import com.commercetools.api.models.product_type.ProductType;
 import com.commercetools.api.models.product_type.ProductTypeDraft;
+import com.commercetools.api.models.review.Review;
+import com.commercetools.api.models.review.ReviewDraft;
 import com.commercetools.api.models.state.State;
 import com.commercetools.api.models.state.StateDraft;
 import com.commercetools.api.models.type.Type;
@@ -97,5 +101,14 @@ public class DataProvider {
     }
 
 
+    public Payment createPayment(PaymentDraft paymentDraft) {
+
+        return apiRoot.payments().post(paymentDraft).executeBlocking().getBody();
+    }
+
+    public Review createReview(ReviewDraft reviewDraft) {
+
+        return apiRoot.reviews().post(reviewDraft).executeBlocking().getBody();
+    }
 }
 
